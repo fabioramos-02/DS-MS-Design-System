@@ -14,9 +14,13 @@ Cada release tem **CHANGELOG** (o que mudou e por quê). Os times consomem por *
 
 ## Modelo de contribuição
 
-```
-Proposta (issue/MR) → revisão do mantenedor (SETDIG) → CI verde (inclui a11y)
-        → merge na branch principal → tag semver → publish automático
+```mermaid
+flowchart LR
+    A["Proposta (issue/MR)"] --> B["revisão do mantenedor (SETDIG)"]
+    B --> C["CI verde (inclui a11y)"]
+    C --> D["merge na branch principal"]
+    D --> E["tag semver"]
+    E --> F["publish automático"]
 ```
 
 - Designers contribuem **tokens** via Figma/Tokens Studio (vira MR de JSON).

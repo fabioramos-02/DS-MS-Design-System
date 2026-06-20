@@ -21,9 +21,10 @@
   text-decoration: none;
 }
 
-/* Foco visível — requisito de acessibilidade (eMAG/WCAG: foco perceptível) */
+/* Foco visível — requisito de acessibilidade (eMAG/WCAG: foco perceptível).
+   Cor igual ao root colors_and_type.css: var(--color-info-600). */
 .btn:focus-visible {
-  outline: 2px solid var(--color-feedback-info);
+  outline: 2px solid var(--color-info-600);
   outline-offset: 2px;
 }
 .btn:active { transform: translateY(1px); }
@@ -68,7 +69,9 @@
 
 /* Variante: perigo */
 .btn-danger {
-  background: var(--color-feedback-error);
+  background: var(--color-error-500);
   color: #fff;
-  border-color: var(--color-feedback-error);
+  border-color: var(--color-error-500);
 }
+.btn-danger:hover  { background: var(--color-error-600); border-color: var(--color-error-600); }
+.btn-danger:active { background: var(--color-error-700); border-color: var(--color-error-700); }

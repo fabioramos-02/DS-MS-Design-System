@@ -1,0 +1,8 @@
+{
+  "search": {
+    "height": { "value": "32px" },
+    "radius": { "value": "2px" },
+    "fontSize": { "value": "14px" },
+    "border": { "value": "{color.primary.300.value}" }
+  }
+}

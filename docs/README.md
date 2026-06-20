@@ -21,11 +21,12 @@ Esta pasta levanta a **POC, o planejamento e a ideia** de como começar a resolv
 | [04-multistack.md](04-multistack.md) | Como PHP / Python / JS consomem (com exemplos) |
 | [05-pipeline-gitlab-ci.md](05-pipeline-gitlab-ci.md) | Stages do `.gitlab-ci.yml` comentados |
 | [06-governanca-acessibilidade.md](06-governanca-acessibilidade.md) | Semver, contribution, eMAG + WCAG 2.1 AA |
-| [07-roadmap.md](07-roadmap.md) | Fases incrementais de adoção |
+| [07-roadmap.md](07-roadmap.md) | Fases incrementais de adoção (plano original) |
+| [08-proximos-passos.md](08-proximos-passos.md) | Status atual pós-implementação e próximos passos concretos |
 
 ## POC rodável
 
-A prova de conceito de 1 componente ponta-a-ponta está em [`../poc/`](../poc/). Ela demonstra: **token JSON → Style Dictionary → CSS/SCSS/JS/PHP/Python → Storybook → snippets por stack**. Veja [`../poc/README.md`](../poc/README.md).
+A prova de conceito está em [`../poc/`](../poc/). Hoje cobre **10 componentes** (button, input, search, selection, link, card, tag, notification, header, footer) no Storybook, fiéis ao `components.css`/`colors_and_type.css` da raiz, com o fluxo completo: **token JSON → Style Dictionary → CSS/SCSS/JS/PHP/Python → Storybook → snippets por stack**. Veja [`../poc/README.md`](../poc/README.md).
 
 ## Decisões já tomadas
 

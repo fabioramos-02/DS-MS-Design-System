@@ -1,19 +1,36 @@
-# POC — DS-MS ponta-a-ponta (button)
+# POC — DS-MS no Storybook (10 componentes)
 
 Prova de conceito do plano em [`../docs/`](../docs/). Demonstra a tese central:
 
 > **Uma fonte única de tokens (JSON) gera código para CSS, SCSS, JS, PHP e Python**,
-> e o componente é documentado vivo no Storybook com snippets por stack.
+> e cada componente é documentado vivo no Storybook, **fiel** a `components.css`/`colors_and_type.css` da raiz.
 
 ```
 tokens/*.json  ──Style Dictionary──►  dist/{css,scss,js,php,python,json}
                                               │
-                                  button.css consome os tokens
+                          componentes (css) consomem os tokens gerados
                                               │
                                   Storybook (web-components + a11y)
                                               │
-                          snippets HTML / Blade / Jinja / React
+                    snippets multi-stack (button) · mdx de acessibilidade (todos)
 ```
+
+## Componentes implementados
+
+| Componente | Tipo | Origem fiel |
+|---|---|---|
+| Button | CSS+HTML | `.btn*` |
+| Input (texto/textarea/select) | CSS+HTML | `.field*` |
+| Search | CSS+HTML | `.search` |
+| Selection (checkbox/radio/toggle) | CSS+HTML | `.checkbox`/`.radio`/`.toggle` |
+| Link | CSS+HTML | `.link` |
+| Card (+ card-link) | CSS+HTML | `.card`/`.card-link` |
+| Tag | CSS+HTML | `.tag*` |
+| Notification | CSS+HTML | `.notification*` |
+| **Header** | **Web Component** (`<ms-header>`, Lit, light DOM) | `.ds-header` + comportamento de menu mobile novo |
+| Footer | CSS+HTML | `.ds-footer` |
+
+> de `components.css` da raiz. **Não implementados** (sem CSS de origem no repo — exigem ida ao Figma): Accordion, Breadcrumb, Carousel, Dropdown, Menu, Segment Button, Table, Tiles. Ver [`../docs/08-proximos-passos.md`](../docs/08-proximos-passos.md).
 
 ## Pré-requisitos
 - Node.js 18+ e npm.
@@ -49,9 +66,10 @@ Após `npm run tokens`, o mesmo token sai em cada linguagem:
 → É a prova do **"uma fonte, várias linguagens"** que resolve a dor multi-stack.
 
 No Storybook (`npm run storybook`):
-- Story **Componentes/Button** renderiza variantes/tamanhos/estados.
+- Cada componente em **Componentes/⟨Nome⟩** renderiza variantes/tamanhos/estados.
 - Painel **Accessibility** (axe) sem violações.
-- Página **Acessibilidade & uso** com a tabela de testes (eMAG/WCAG) e os snippets por stack.
+- Página **⟨Nome⟩/Acessibilidade & uso** com notas de eMAG/WCAG e código (snippets completos multi-stack só no Button — os demais usam o mesmo padrão, documentado em [`04-multistack.md`](../docs/04-multistack.md)).
+- `<ms-header>` é o único **Web Component** (Lit) — ver stories Mobile fechado/aberto.
 
 ## Estrutura
 
@@ -60,13 +78,20 @@ poc/
   package.json                 scripts: tokens, storybook, build-storybook
   style-dictionary.config.js   formatos css/scss/js/php/python/json (+ PHP/Python custom)
   tokens/
-    color.json                 paleta (seed de colors_and_type.css da raiz)
-    button.json                tokens do componente (referenciam color.*)
-  src/components/button/
-    button.css                 consome dist/css/tokens.css (gerado)
-    button.stories.js          stories (HTML render via lit-html)
-    button.mdx                 docs + acessibilidade + snippets
-    snippets/                  html / blade / jinja / react
+    color.json                 paleta COMPLETA fiel a colors_and_type.css (primary/neutral/error/success/warning/support/info)
+    button.json, input.json, search.json, selection.json,
+    card.json, tag.json, notification.json, header.json   tokens por componente (referenciam color.*)
+  src/components/
+    button/      button.css, button.stories.js, button.mdx, snippets/ (html/blade/jinja/react)
+    input/       input.css, input.stories.js, input.mdx
+    search/      search.css, search.stories.js, search.mdx
+    selection/   selection.css, selection.stories.js, selection.mdx
+    link/        link.css, link.stories.js, link.mdx
+    card/        card.css, card.stories.js
+    tag/         tag.css, tag.stories.js
+    notification/ notification.css, notification.stories.js, notification.mdx
+    header/      header.css, ms-header.js (Web Component Lit, light DOM), header.stories.js, header.mdx
+    footer/      footer.css, footer.stories.js
   .storybook/                  main.js + preview.js (web-components-vite + a11y)
   .gitlab-ci.yml               pipeline de referência
 ```
