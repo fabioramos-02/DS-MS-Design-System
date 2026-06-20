@@ -1,10 +1,31 @@
 {
-  "name": "@dsms/ds-sis-poc",
+  "name": "@dsms/ds-sis",
   "version": "0.1.0",
-  "private": true,
-  "description": "POC ponta-a-ponta do DS-MS: token JSON -> Style Dictionary -> CSS/SCSS/JS/PHP/Python -> Storybook (web-components + a11y).",
+  "description": "DS-MS — Design System de Mato Grosso do Sul. Tokens (JSON -> Style Dictionary) + componentes CSS+HTML/Web Components, fiéis ao Figma oficial. 10/41 componentes implementados (ver docs/08-proximos-passos.md).",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fabioramos-02/DS-MS-Design-System.git",
+    "directory": "poc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "main": "dist/js/ds-sis.js",
+  "module": "dist/js/ds-sis.js",
+  "exports": {
+    "./css": "./dist/css/ds-sis.css",
+    "./dist/css/ds-sis.css": "./dist/css/ds-sis.css",
+    ".": "./dist/js/ds-sis.js",
+    "./tokens": "./dist/json/tokens.json"
+  },
   "scripts": {
     "tokens": "style-dictionary build --config style-dictionary.config.js",
+    "build": "npm run tokens && node scripts/build-css.js && vite build --config vite.lib.config.js",
     "storybook": "npm run tokens && storybook dev -p 6006",
     "build-storybook": "npm run tokens && storybook build"
   },

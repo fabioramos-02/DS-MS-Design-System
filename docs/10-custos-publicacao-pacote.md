@@ -2,9 +2,11 @@
 
 Preços pesquisados em junho/2026. Valores em USD nas fontes originais (referência de câmbio: ~R$ 5,40/USD — ajustar na hora de orçar oficialmente). Este documento orça **a infraestrutura**, não a hora de desenvolvimento.
 
+> **Atualização:** o repositório vive no **GitHub** (`fabioramos-02/DS-MS-Design-System`), não GitLab. O cenário recomendado abaixo foi atualizado para **GitHub Actions + GitHub Pages**; as linhas de GitLab ficam como alternativa histórica (caso a SETDIG opte por migrar pra um GitLab institucional no futuro).
+
 ## Resumo executivo
 
-> **O caminho mais barato (essencialmente R$ 0/mês) é tecnicamente viável**: GitLab Free (Package Registry incluso) + jsDelivr (CDN gratuita) + GitLab Pages (Storybook gratuito). O custo só aparece se a SETDIG quiser **recursos premium** (regressão visual automatizada em escala, registro privado fora do GitLab, CI com mais minutos).
+> **O caminho mais barato (essencialmente R$ 0/mês) é tecnicamente viável**: npm público + jsDelivr (CDN gratuita) + GitHub Actions (grátis/ilimitado em repo público) + GitHub Pages (Storybook gratuito). O custo só aparece se a SETDIG quiser **recursos premium** (regressão visual automatizada em escala, registro privado, CI com mais minutos em repo privado).
 
 ## 1. Registro do pacote (onde o `npm install` busca o pacote)
 
@@ -15,7 +17,7 @@ Preços pesquisados em junho/2026. Valores em USD nas fontes originais (referên
 | **GitLab Package Registry** (dentro do próprio GitLab institucional) | **Incluso no GitLab Free** | Suporta npm, e ainda PyPI, Maven, Composer (útil se PHP/Python quiserem consumir via gerenciador de pacote nativo, não só CDN). Limite de armazenamento compartilhado de 5GB/namespace no plano Free — folgado para um design system (poucos MB por versão). |
 | **GitHub Packages** | **Grátis até 500MB** (free), 2GB no Pro | Alternativa se o código for hospedado no GitHub em vez do GitLab. Overage: US$ 0,008/GB/dia além da cota. |
 
-**Recomendação:** **npm público + espelhado no GitLab Package Registry**. Zero custo, e o GitLab institucional já teria o pacote disponível internamente mesmo se o npm público ficar fora do ar.
+**Recomendação (decisão real):** **npm público** (`@dsms/ds-sis`), publicado via GitHub Actions em tag semver. Zero custo. GitLab Package Registry/GitHub Packages ficam como espelho futuro opcional, não necessários agora.
 
 ## 2. CDN (para times PHP/Python que não usam Node, via `<link>`/`<script>`)
 
@@ -31,20 +33,21 @@ Preços pesquisados em junho/2026. Valores em USD nas fontes originais (referên
 
 | Opção | Custo | Observação |
 |---|---|---|
-| **GitLab Free** (CI/CD compartilhado) | **Grátis**, 400 min/mês de pipeline compartilhado | Suficiente para um repositório de design system (builds são rápidos — a POC local rodou em ~10-15s). |
-| **GitLab Premium** | **US$ 29/usuário/mês** (cobrado anual, ~US$ 348/usuário/ano) | Daria 10.000 min/mês de CI + aprovação de MR + scanning de qualidade. **Não necessário** só para este projeto — só se a SETDIG já for migrar a organização toda pra Premium por outros motivos. |
-| **Runner próprio (self-hosted)** | Custo de servidor (variável) | Se a SETDIG já tem infraestrutura on-premise/OpenShift (mencionado no vault para outros projetos), pode rodar runner próprio sem custo de licença adicional — só consumo de máquina já existente. |
+| **GitHub Actions, repositório público** | **Grátis e ilimitado** em runners padrão (confirmado em pesquisa de mercado 2026) | É o cenário real do DS-MS: repo público, sem motivo de negócio pra ser privado. `.github/workflows/{ci,pages,publish-npm}.yml` rodam sem custo algum. |
+| **GitHub Actions, repositório privado** | Cota gratuita limitada (varia por plano), overage cobrado por minuto | Só relevante se decidirem tornar o repo privado — não é o caso aqui. |
+| *(histórico)* GitLab Free | Grátis, 400 min/mês de pipeline compartilhado | Alternativa caso migrem pra GitLab institucional no futuro. |
 
-**Recomendação:** **GitLab Free com runners compartilhados** ou runner próprio se já existir infraestrutura disponível (a SETDIG já usa Red Hat OpenShift em outros projetos, segundo o vault — reaproveitável).
+**Recomendação (decisão real):** **GitHub Actions em repositório público** — grátis, sem limite de minutos, zero configuração extra de billing.
 
 ## 4. Documentação viva (Storybook publicado)
 
 | Opção | Custo | Observação |
 |---|---|---|
-| **GitLab Pages** | **Grátis**, incluso em qualquer plano GitLab | Hospeda o `storybook-static/` gerado pelo `npm run build-storybook`. Pode até ter domínio próprio (`designsystem.ms.gov.br` apontando pra lá). |
-| **Vercel/Netlify (free tier)** | Grátis com limites de banda generosos | Alternativa se preferirem hospedagem fora do GitLab. |
+| **GitHub Pages** | **Grátis**, incluso em qualquer plano GitHub | Hospeda o `storybook-static/` via `actions/deploy-pages` (workflow `pages.yml`). Suporta domínio próprio (`designsystem.ms.gov.br` apontando pra lá, via CNAME) se decidirem substituir o site atual. |
+| *(histórico)* GitLab Pages | Grátis, incluso em qualquer plano GitLab | Alternativa caso migrem pra GitLab institucional no futuro. |
+| **Vercel/Netlify (free tier)** | Grátis com limites de banda generosos | Alternativa fora do GitHub, não necessária hoje. |
 
-**Recomendação:** **GitLab Pages** — já está dentro do mesmo fluxo de CI, sem serviço extra pra gerenciar.
+**Recomendação (decisão real):** **GitHub Pages** — já está no mesmo fluxo de Actions, sem serviço extra pra gerenciar.
 
 ## 5. Regressão visual (testar se um componente mudou visualmente sem querer)
 
@@ -56,15 +59,15 @@ Preços pesquisados em junho/2026. Valores em USD nas fontes originais (referên
 
 **Recomendação imediata:** **Chromatic free tier** (ou nem ligar regressão visual ainda, e decidir depois de medir consumo real com os 10 componentes da POC). Reavaliar custo só na Fase 3 do roadmap (CI/CD completo).
 
-## Tabela consolidada — cenário recomendado
+## Tabela consolidada — cenário recomendado (decisão real, GitHub)
 
 | Item | Serviço | Custo mensal | Custo anual |
 |---|---|---|---|
-| Registro do pacote | npm público + GitLab Package Registry | R$ 0 | R$ 0 |
-| CDN | jsDelivr | R$ 0 | R$ 0 |
-| CI/CD | GitLab Free (ou runner próprio) | R$ 0 | R$ 0 |
-| Documentação (Storybook) | GitLab Pages | R$ 0 | R$ 0 |
-| Regressão visual | Chromatic free tier | R$ 0 | R$ 0 |
+| Registro do pacote | npm público (`@dsms/ds-sis`) | R$ 0 | R$ 0 |
+| CDN | jsDelivr (automático, zero config) | R$ 0 | R$ 0 |
+| CI/CD | GitHub Actions (repo público, ilimitado) | R$ 0 | R$ 0 |
+| Documentação (Storybook) | GitHub Pages | R$ 0 | R$ 0 |
+| Regressão visual | Chromatic free tier (não ligado ainda) | R$ 0 | R$ 0 |
 | **Total de infraestrutura** | | **R$ 0/mês** | **R$ 0/ano** |
 
 ## Cenário com upgrade (se crescer muito)

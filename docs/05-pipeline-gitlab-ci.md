@@ -1,5 +1,7 @@
 # 05 — Pipeline GitLab CI
 
+> **Atualização:** o projeto pivotou para **GitHub** (repositório real: `fabioramos-02/DS-MS-Design-System`). O pipeline que **roda de verdade hoje** está em `.github/workflows/` (`ci.yml`, `pages.yml`, `publish-npm.yml`), publicando em **npm público + jsDelivr + GitHub Pages** — não GitLab. Este documento permanece como **referência histórica** do desenho original: os 4 estágios conceituais abaixo (tokens → test → build → publish) foram preservados na implementação real, só a plataforma de CI mudou. `poc/.gitlab-ci.yml` foi removido do repositório por estar superado.
+
 O `.gitlab-ci.yml` automatiza o caminho **mudança → publicação**. Quatro stages.
 
 ```yaml

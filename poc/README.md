@@ -30,7 +30,7 @@ tokens/*.json  ──Style Dictionary──►  dist/{css,scss,js,php,python,jso
 | **Header** | **Web Component** (`<ms-header>`, Lit, light DOM) | `.ds-header` + comportamento de menu mobile novo |
 | Footer | CSS+HTML | `.ds-footer` |
 
-> de `components.css` da raiz. **Não implementados** (sem CSS de origem no repo — exigem ida ao Figma): Accordion, Breadcrumb, Carousel, Dropdown, Menu, Segment Button, Table, Tiles. Ver [`../docs/08-proximos-passos.md`](../docs/08-proximos-passos.md).
+> Origem fiel = classes equivalentes em `components.css` da raiz. **Não implementados** (sem CSS de origem no repo — exigem ida ao Figma): Accordion, Breadcrumb, Carousel, Dropdown, Menu, Segment Button, Table, Tiles. Ver [`../docs/08-proximos-passos.md`](../docs/08-proximos-passos.md).
 
 ## Pré-requisitos
 - Node.js 18+ e npm.
@@ -49,7 +49,33 @@ npm run storybook        # http://localhost:6006
 
 # 3) Gera o site estático de docs (o que iria pro deploy)
 npm run build-storybook  # saída em storybook-static/
+
+# 4) Gera o BUNDLE PUBLICÁVEL (o que vai pro npm/CDN)
+npm run build            # tokens -> dist/css/ds-sis.css + dist/js/ds-sis.js
 ```
+
+`npm run build` roda 3 passos: gera os tokens, concatena `dist/css/tokens.css` + o CSS de todos os 10 componentes em **`dist/css/ds-sis.css`**, e empacota `<ms-header>` (com Lit **bundlado dentro**, sem `import` externo) em **`dist/js/ds-sis.js`** via Vite (`vite.lib.config.js`). É esse par de arquivos que o consumidor final (PHP/Python/JS) carrega via CDN.
+
+## Publicar (npm público + jsDelivr + GitHub Pages)
+
+O pacote é `@dsms/ds-sis`, publicado em **npm público** (não precisa de registry privado — é design system de governo, sem segredo a proteger). Custos detalhados em [`../docs/10-custos-publicacao-pacote.md`](../docs/10-custos-publicacao-pacote.md) (cenário recomendado: **R$ 0/mês**).
+
+### Passos manuais (uma vez, feitos por quem tem acesso ao npm/GitHub — não automatizáveis por IA)
+1. Gerar um **Automation token** (Read and write) na org/scope `dsms` em npmjs.com → Access Tokens. **Nunca cole o token em chat ou em arquivo versionado.**
+2. Adicionar esse token como secret `NPM_TOKEN` em GitHub → Settings → Secrets and variables → Actions.
+3. Em GitHub → Settings → Pages, definir Source = **"GitHub Actions"** (uma vez).
+4. Se o npm reclamar que a org `dsms` não existe ou que não há permissão de escrita: criar a org gratuita em `npmjs.com/org/create` antes de tentar de novo.
+
+### Fluxo automático (depois dos passos manuais)
+- **Todo push em `main`** → `.github/workflows/ci.yml` builda tudo (valida) e `.github/workflows/pages.yml` publica o Storybook no GitHub Pages.
+- **Toda tag `vX.Y.Z`** → `.github/workflows/publish-npm.yml` builda e publica no npm:
+  ```bash
+  git tag v0.1.0
+  git push origin main --tags
+  ```
+- Depois do primeiro publish, a CDN funciona **automaticamente, sem configuração**:
+  `https://cdn.jsdelivr.net/npm/@dsms/ds-sis/dist/css/ds-sis.css`
+  `https://cdn.jsdelivr.net/npm/@dsms/ds-sis/dist/js/ds-sis.js`
 
 ## O que conferir (verificação)
 
@@ -75,8 +101,11 @@ No Storybook (`npm run storybook`):
 
 ```
 poc/
-  package.json                 scripts: tokens, storybook, build-storybook
+  package.json                 nome @dsms/ds-sis; scripts: tokens, build, storybook, build-storybook
   style-dictionary.config.js   formatos css/scss/js/php/python/json (+ PHP/Python custom)
+  scripts/build-css.js         concatena tokens.css + CSS dos 10 componentes -> dist/css/ds-sis.css
+  vite.lib.config.js           empacota src/index.js -> dist/js/ds-sis.js (lit bundlado, sem CSS duplicado)
+  src/index.js                 entrada do pacote: registra <ms-header>
   tokens/
     color.json                 paleta COMPLETA fiel a colors_and_type.css (primary/neutral/error/success/warning/support/info)
     button.json, input.json, search.json, selection.json,
@@ -93,12 +122,13 @@ poc/
     header/      header.css, ms-header.js (Web Component Lit, light DOM), header.stories.js, header.mdx
     footer/      footer.css, footer.stories.js
   .storybook/                  main.js + preview.js (web-components-vite + a11y)
-  .gitlab-ci.yml               pipeline de referência
 ```
+
+Pipeline real (CI/CD) está em `../.github/workflows/{ci,pages,publish-npm}.yml` — não mais `.gitlab-ci.yml` (removido; ver nota de pivot em [`../docs/05-pipeline-gitlab-ci.md`](../docs/05-pipeline-gitlab-ci.md)).
 
 ## Notas
 - O formato de token aqui é o **nativo do Style Dictionary** (robusto e estável).
   Em produção, o Figma + **Tokens Studio** exporta **W3C DTCG** (`$value`/`$type`),
   também suportado pelo Style Dictionary v4. Ver [`../docs/01-arquitetura.md`](../docs/01-arquitetura.md).
-- `dist/` é **gerado** (está no `.gitignore`) — rode `npm run tokens` para criá-lo.
-- O `.gitlab-ci.yml` é referência; rodar de verdade exige um runner GitLab.
+- `dist/` e `storybook-static/` são **gerados** (estão no `.gitignore`) — rode `npm run build`/`npm run tokens`/`npm run build-storybook` para criá-los.
+- `ms-header.js` importa `./header.css` só para o Storybook local funcionar isolado; o bundle publicado (`dist/js/ds-sis.js`) **não** inclui esse CSS — o componente espera herdar `ds-sis.css` já carregado na página (light DOM, decisão de arquitetura).

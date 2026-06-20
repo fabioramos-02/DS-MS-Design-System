@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths: ["poc/**", ".github/workflows/ci.yml"]
+  pull_request:
+    paths: ["poc/**", ".github/workflows/ci.yml"]
+
+defaults:
+  run:
+    working-directory: poc
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: poc/package-lock.json
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Gerar tokens + bundle publicável (CSS+JS)
+        run: npm run build
+
+      - name: Buildar Storybook
+        run: npm run build-storybook
