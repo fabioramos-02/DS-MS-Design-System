@@ -30,7 +30,7 @@ Custo de infraestrutura hoje: **R$ 0/mês** (npm público + jsDelivr + GitHub Ac
 | Caminho | O que é |
 |---|---|
 | [`docs/`](docs/) | Planejamento, arquitetura, pesquisa e decisões — comece pelo [índice](docs/README.md) |
-| [`poc/`](poc/) | Implementação real: tokens (Style Dictionary), os 10 componentes, Storybook, build publicável (`dist/`) |
+| [`poc/`](poc/) | Implementação real: tokens (Style Dictionary), os 19 componentes, Storybook, build publicável (`dist/`) |
 | [`exemplo-consumo/`](exemplo-consumo/) | Página que instala `@design-system-ms/ds-sis` via `npm install` de verdade — prova que o pacote publicado funciona |
 | [`apresentacao/`](apresentacao/) | Gerador (`pptxgenjs`) do deck de apresentação para a gestão |
 | [`.github/workflows/`](.github/workflows/) | CI (`ci.yml`), deploy do Storybook+exemplo no GitHub Pages (`pages.yml`), publish no npm em tag semver (`publish-npm.yml`) |

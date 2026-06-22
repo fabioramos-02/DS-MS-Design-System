@@ -28,7 +28,13 @@ Esta pasta levanta a **POC, o planejamento e a ideia** de como começar a resolv
 
 ## POC rodável
 
-A prova de conceito está em [`../poc/`](../poc/). Hoje cobre **10 componentes** (button, input, search, selection, link, card, tag, notification, header, footer) no Storybook, fiéis ao `components.css`/`colors_and_type.css` da raiz, com o fluxo completo: **token JSON → Style Dictionary → CSS/SCSS/JS/PHP/Python → Storybook → snippets por stack**. Veja [`../poc/README.md`](../poc/README.md).
+A prova de conceito está em [`../poc/`](../poc/). Hoje cobre **19 componentes**: 10 fiéis ao
+`components.css`/`colors_and_type.css` da raiz (button, input, search, selection, link, card,
+tag, notification, header, footer) + 9 implementados a partir da documentação pública de
+`designsystem.ms.gov.br` (accordion, breadcrumb, carousel, dropdown, label, menu, segment
+button, table, tiles — ver [`docs/08-proximos-passos.md`](08-proximos-passos.md) sobre a
+diferença de fidelidade), com o fluxo completo: **token JSON → Style Dictionary →
+CSS/SCSS/JS/PHP/Python → Storybook → snippets por stack**. Veja [`../poc/README.md`](../poc/README.md).
 
 ## Decisões já tomadas
 

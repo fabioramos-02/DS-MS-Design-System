@@ -1,4 +1,4 @@
-# POC — DS-MS no Storybook (10 componentes)
+# POC — DS-MS no Storybook (19 componentes)
 
 Prova de conceito do plano em [`../docs/`](../docs/). Demonstra a tese central:
 
@@ -17,6 +17,8 @@ tokens/*.json  ──Style Dictionary──►  dist/{css,scss,js,php,python,jso
 
 ## Componentes implementados
 
+### Fiéis a `components.css` da raiz (10)
+
 | Componente | Tipo | Origem fiel |
 |---|---|---|
 | Button | CSS+HTML | `.btn*` |
@@ -27,10 +29,29 @@ tokens/*.json  ──Style Dictionary──►  dist/{css,scss,js,php,python,jso
 | Card (+ card-link) | CSS+HTML | `.card`/`.card-link` |
 | Tag | CSS+HTML | `.tag*` |
 | Notification | CSS+HTML | `.notification*` |
-| **Header** | **Web Component** (`<ms-header>`, Lit, light DOM) | `.ds-header` + comportamento de menu mobile novo |
+| **Header** | **Web Component** (`<ms-header>`, Lit, light DOM) | `.ds-header` + comportamento de menu mobile |
 | Footer | CSS+HTML | `.ds-footer` |
 
-> Origem fiel = classes equivalentes em `components.css` da raiz. **Não implementados** (sem CSS de origem no repo — exigem ida ao Figma): Accordion, Breadcrumb, Carousel, Dropdown, Menu, Segment Button, Table, Tiles. Ver [`../docs/08-proximos-passos.md`](../docs/08-proximos-passos.md).
+### Implementados a partir da documentação pública de `designsystem.ms.gov.br` (9)
+
+Sem origem em `components.css` da raiz — estrutura, variantes, estados e acessibilidade
+extraídos do site oficial (não do Figma fonte, ainda bloqueado — ver
+[`../docs/08-proximos-passos.md`](../docs/08-proximos-passos.md)). Cada `.mdx` documenta a
+fonte e qualquer aproximação assumida.
+
+| Componente | Tipo | Decisão técnica |
+|---|---|---|
+| Accordion | CSS+HTML | `<details>`/`<summary>` nativo — sem JS |
+| Breadcrumb | CSS+HTML | `<nav><ol>` semântico |
+| Segment Button | CSS+HTML | `input[type=radio]` + `label` (seleção exclusiva nativa) |
+| Table | CSS+HTML | `<table>` semântica, status via `.tag` |
+| Tiles | CSS+HTML | grid de `<a class="tile">` |
+| Dropdown | CSS+HTML | "select" = alias de `.field-select`; "menu" = `<details>` |
+| Label | CSS+HTML | standalone, alias dos tokens de `input.label.*` |
+| **Menu** | **Web Component** (`<ms-menu>`, Lit, light DOM) | barra + submenu + toggle mobile |
+| **Carousel** | **Web Component** (`<ms-carousel>`, Lit, light DOM) | autoplay pausável + controles + teclado |
+
+**Restam 22/41 sem nenhuma implementação** (nem documentação pública, nem Figma).
 
 ## Pré-requisitos
 - Node.js 18+ e npm.
@@ -54,7 +75,7 @@ npm run build-storybook  # saída em storybook-static/
 npm run build            # tokens -> dist/css/ds-sis.css + dist/js/ds-sis.js
 ```
 
-`npm run build` roda 3 passos: gera os tokens, concatena `dist/css/tokens.css` + o CSS de todos os 10 componentes em **`dist/css/ds-sis.css`**, e empacota `<ms-header>` (com Lit **bundlado dentro**, sem `import` externo) em **`dist/js/ds-sis.js`** via Vite (`vite.lib.config.js`). É esse par de arquivos que o consumidor final (PHP/Python/JS) carrega via CDN.
+`npm run build` roda 3 passos: gera os tokens, concatena `dist/css/tokens.css` + o CSS de todos os 19 componentes em **`dist/css/ds-sis.css`**, e empacota `<ms-header>`, `<ms-menu>` e `<ms-carousel>` (com Lit **bundlado dentro**, sem `import` externo) em **`dist/js/ds-sis.js`** via Vite (`vite.lib.config.js`). É esse par de arquivos que o consumidor final (PHP/Python/JS) carrega via CDN.
 
 ## Publicar (npm público + jsDelivr + GitHub Pages)
 
@@ -95,7 +116,7 @@ No Storybook (`npm run storybook`):
 - Cada componente em **Componentes/⟨Nome⟩** renderiza variantes/tamanhos/estados.
 - Painel **Accessibility** (axe) sem violações.
 - Página **⟨Nome⟩/Acessibilidade & uso** com notas de eMAG/WCAG e código (snippets completos multi-stack só no Button — os demais usam o mesmo padrão, documentado em [`04-multistack.md`](../docs/04-multistack.md)).
-- `<ms-header>` é o único **Web Component** (Lit) — ver stories Mobile fechado/aberto.
+- `<ms-header>`, `<ms-menu>` e `<ms-carousel>` são os 3 **Web Components** (Lit) — ver stories Mobile fechado/aberto (Header/Menu) e Manual/Autoplay (Carousel).
 
 ## Estrutura
 
@@ -103,13 +124,15 @@ No Storybook (`npm run storybook`):
 poc/
   package.json                 nome @design-system-ms/ds-sis; scripts: tokens, build, storybook, build-storybook
   style-dictionary.config.js   formatos css/scss/js/php/python/json (+ PHP/Python custom)
-  scripts/build-css.js         concatena tokens.css + CSS dos 10 componentes -> dist/css/ds-sis.css
+  scripts/build-css.js         concatena tokens.css + CSS dos 19 componentes -> dist/css/ds-sis.css
   vite.lib.config.js           empacota src/index.js -> dist/js/ds-sis.js (lit bundlado, sem CSS duplicado)
-  src/index.js                 entrada do pacote: registra <ms-header>
+  src/index.js                 entrada do pacote: registra <ms-header>, <ms-menu>, <ms-carousel>
   tokens/
     color.json                 paleta COMPLETA fiel a colors_and_type.css (primary/neutral/error/success/warning/support/info)
     button.json, input.json, search.json, selection.json,
     card.json, tag.json, notification.json, header.json   tokens por componente (referenciam color.*)
+    accordion.json, breadcrumb.json, carousel.json, dropdown.json,
+    label.json, menu.json, segment-button.json, table.json, tiles.json   tokens dos 9 novos
   src/components/
     button/      button.css, button.stories.js, button.mdx, snippets/ (html/blade/jinja/react)
     input/       input.css, input.stories.js, input.mdx
@@ -121,6 +144,10 @@ poc/
     notification/ notification.css, notification.stories.js, notification.mdx
     header/      header.css, ms-header.js (Web Component Lit, light DOM), header.stories.js, header.mdx
     footer/      footer.css, footer.stories.js
+    accordion/, breadcrumb/, dropdown/, label/, segment-button/, table/, tiles/
+                 <nome>.css, <nome>.stories.js, <nome>.mdx (CSS+HTML puro)
+    menu/        menu.css, ms-menu.js (Web Component Lit, light DOM), menu.stories.js, menu.mdx
+    carousel/    carousel.css, ms-carousel.js (Web Component Lit, light DOM), carousel.stories.js, carousel.mdx
   .storybook/                  main.js + preview.js (web-components-vite + a11y)
 ```
 
