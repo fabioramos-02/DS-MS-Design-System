@@ -1,7 +1,7 @@
 {
   "name": "@design-system-ms/ds-sis",
   "version": "0.1.0",
-  "description": "DS-MS — Design System de Mato Grosso do Sul. Tokens (JSON -> Style Dictionary) + componentes CSS+HTML/Web Components, fiéis ao Figma oficial. 10/41 componentes implementados (ver docs/08-proximos-passos.md).",
+  "description": "DS-MS — Design System de Mato Grosso do Sul. Tokens (JSON -> Style Dictionary) + componentes CSS+HTML/Web Components, fiéis ao Figma oficial. 19/41 componentes implementados (ver docs/08-proximos-passos.md).",
   "license": "MIT",
   "repository": {
     "type": "git",
