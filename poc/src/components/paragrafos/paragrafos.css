@@ -1,0 +1,18 @@
+/* ============================================================================
+   DS-MS — Parágrafos (Diretrizes de design). Sem origem em components.css da raiz
+   — implementado a partir da documentação pública de designsystem.ms.gov.br/paragrafos/.
+   Variantes: padrão, secundário (metadados), destaque (sem substituir títulos).
+   ============================================================================ */
+@import "../../../dist/css/tokens.css";
+
+.ds-paragrafo {
+  font-family: "Open Sans", system-ui, sans-serif;
+  font-size: var(--paragrafos-font-size);
+  line-height: var(--paragrafos-line-height);
+  max-width: var(--paragrafos-max-width);
+  margin: 0 0 var(--paragrafos-margin-bottom);
+}
+
+.ds-paragrafo.padrao { color: var(--paragrafos-padrao-color); }
+.ds-paragrafo.secundario { color: var(--paragrafos-secundario-color); font-size: var(--paragrafos-secundario-font-size); }
+.ds-paragrafo.destaque { color: var(--paragrafos-destaque-color); font-weight: var(--paragrafos-destaque-font-weight); }
