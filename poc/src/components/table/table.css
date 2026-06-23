@@ -9,47 +9,47 @@
    ============================================================================ */
 @import "../../../dist/css/tokens.css";
 
-.ds-table-wrap { border: 1px solid rgba(35, 35, 35, .12); background: #fefefe; overflow: hidden; }
+.ds-table-wrap { border: 1px solid var(--table-wrap-border); background: var(--color-neutral-0); overflow: hidden; }
 
 .ds-table {
   width: 100%;
   border-collapse: collapse;
-  font-family: "Open Sans", system-ui, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  color: #191919;
+  font-family: var(--font-family-default);
+  font-size: var(--font-size-md);
+  line-height: var(--font-lineheight-24);
+  color: var(--table-header-color);
 }
 .ds-table th, .ds-table td {
-  padding: 4px 8px;
+  padding: var(--spacing-4) var(--spacing-8);
   text-align: left;
   vertical-align: middle;
 }
 .ds-table th {
-  background: rgba(35, 35, 35, .24);
-  font-weight: 700;
-  border-bottom: 1px solid rgba(35, 35, 35, .24);
-  border-right: 1px solid rgba(35, 35, 35, .24);
+  background: var(--table-header-background);
+  font-weight: var(--font-weight-700);
+  border-bottom: 1px solid var(--table-header-border);
+  border-right: 1px solid var(--table-header-border);
 }
 .ds-table th:last-child { border-right: 0; }
 .ds-table td {
-  font-weight: 400;
-  border-bottom: 1px solid rgba(35, 35, 35, .12);
-  border-right: 1px solid rgba(35, 35, 35, .12);
+  font-weight: var(--font-weight-400);
+  border-bottom: 1px solid var(--table-border);
+  border-right: 1px solid var(--table-border);
 }
 .ds-table td:last-child { border-right: 0; }
 .ds-table tbody tr:last-child td { border-bottom: 0; }
-.ds-table tbody tr:hover { background: rgba(0, 79, 159, .04); }
-.ds-table tbody tr:focus-within { background: rgba(0, 79, 159, .04); }
+.ds-table tbody tr:hover { background: var(--table-row-hover); }
+.ds-table tbody tr:focus-within { background: var(--table-row-hover); }
 
-.ds-table-striped tbody tr:nth-child(even) { background: rgba(35, 35, 35, .04); }
-.ds-table-striped tbody tr:nth-child(even):hover { background: rgba(0, 79, 159, .04); }
+.ds-table-striped tbody tr:nth-child(even) { background: var(--table-stripe-background); }
+.ds-table-striped tbody tr:nth-child(even):hover { background: var(--table-row-hover); }
 
-.ds-table-compact th, .ds-table-compact td { padding: 4px 8px; }
+.ds-table-compact th, .ds-table-compact td { padding: var(--spacing-4) var(--spacing-8); }
 
 .ds-table .col-actions { text-align: right; white-space: nowrap; }
 .ds-table .col-select { width: 1%; }
 
-.ds-table caption { text-align: left; padding: 8px 0; font-weight: 700; color: #191919; }
+.ds-table caption { text-align: left; padding: var(--spacing-8) 0; font-weight: var(--font-weight-700); color: var(--table-header-color); }
 
 @media (max-width: 768px) {
   .ds-table-wrap { overflow-x: auto; }

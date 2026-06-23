@@ -37,6 +37,7 @@
     },
     "alpha": {
       "brand": {
+        "4": { "value": "#004f9f0a" },
         "8": { "value": "#004f9f14" },
         "24": { "value": "#004f9f3d" }
       },
@@ -47,6 +48,11 @@
       },
       "light": {
         "50": { "value": "#ffffff80" }
+      },
+      "neutral900": {
+        "4": { "value": "#2323230a", "comment": "rgba(35,35,35,.04) — zebra do Table" },
+        "12": { "value": "#2323231f", "comment": "rgba(35,35,35,.12) — base usada no node Table (280:45414), distinta de alpha/dark" },
+        "24": { "value": "#2323233d", "comment": "rgba(35,35,35,.24) — thead do Table" }
       }
     },
     "primitive": {
