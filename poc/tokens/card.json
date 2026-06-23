@@ -4,8 +4,8 @@
     "padding": { "value": "16px" },
     "border": { "value": "{color.neutral.100.value}" },
     "link": {
-      "border": { "value": "{color.primary.200.value}" },
-      "borderHover": { "value": "{color.primary.300.value}" },
+      "border": { "value": "{color.primary.100.value}" },
+      "borderHover": { "value": "{color.primary.100.value}" },
       "titleColor": { "value": "{color.neutral.1000.value}" }
     }
   }
