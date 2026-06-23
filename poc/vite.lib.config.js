@@ -35,6 +35,8 @@ module.exports = {
     },
     outDir: 'dist/js',
     emptyOutDir: false,
+    minify: false,
+    sourcemap: true,
     rollupOptions: {
       external: [],
     },
