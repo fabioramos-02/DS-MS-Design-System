@@ -1,0 +1,55 @@
+/* ============================================================================
+   DS-MS — Formulários (Diretrizes de design). Sem origem em components.css da raiz
+   — implementado a partir da documentação pública de designsystem.ms.gov.br/formularios/.
+   Padrão de COMPOSIÇÃO, não reimplementa input/label/button (cada um já existe
+   como componente próprio) — só define grid, seções e bloco de ações.
+   ============================================================================ */
+@import "../../../dist/css/tokens.css";
+
+.ds-form-section {
+  background: var(--formularios-section-background);
+  border-radius: var(--formularios-section-radius);
+  padding: var(--formularios-section-padding);
+  margin-bottom: var(--formularios-section-gap);
+}
+.ds-form-section:last-child { margin-bottom: 0; }
+
+.ds-form-section legend,
+.ds-form-section .ds-form-section-title {
+  font-family: "Open Sans", system-ui, sans-serif;
+  font-weight: var(--font-weight-700);
+  font-size: var(--font-size-1xlg);
+  margin: 0 0 var(--formularios-section-gap);
+  padding: 0;
+}
+
+.ds-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--formularios-grid-gap);
+}
+.ds-form-grid.cols-1 { grid-template-columns: 1fr; }
+
+.ds-form-help {
+  display: block;
+  margin-top: var(--spacing-4);
+  font-size: var(--formularios-help-text-font-size);
+  color: var(--formularios-help-text-color);
+}
+.ds-form-help.is-error { color: var(--formularios-error-color); }
+.ds-form-help.is-success { color: var(--formularios-success-color); }
+
+.ds-form-required { color: var(--formularios-required-mark-color); margin-left: var(--spacing-2); }
+
+.ds-form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--formularios-actions-gap);
+  margin-top: var(--formularios-section-gap);
+}
+.ds-form-actions .secondary-actions,
+.ds-form-actions .primary-actions {
+  display: flex;
+  gap: var(--formularios-actions-gap);
+}

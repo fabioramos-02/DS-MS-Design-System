@@ -21,10 +21,12 @@
 }
 .ds-carousel .carousel-slide {
   flex: 0 0 100%;
+  min-width: 0;
   display: flex; align-items: center; justify-content: center;
   background: var(--carousel-slide-background);
   text-align: center;
-  padding: var(--spacing-24);
+  padding: var(--spacing-24) var(--spacing-48);
+  box-sizing: border-box;
 }
 .ds-carousel .carousel-slide h3 {
   font-family: "Roboto", system-ui, sans-serif;

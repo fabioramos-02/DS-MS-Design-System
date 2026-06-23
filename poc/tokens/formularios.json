@@ -1,0 +1,15 @@
+{
+  "formularios": {
+    "gridGap": { "value": "{spacing.24.value}" },
+    "sectionGap": { "value": "{spacing.32.value}" },
+    "sectionBackground": { "value": "{color.neutral.100.value}" },
+    "sectionPadding": { "value": "{spacing.24.value}" },
+    "sectionRadius": { "value": "{radius.sm.value}" },
+    "requiredMarkColor": { "value": "{color.error.700.value}" },
+    "actionsGap": { "value": "{spacing.12.value}" },
+    "helpTextColor": { "value": "{color.neutral.500.value}" },
+    "helpTextFontSize": { "value": "{font.size.xsm.value}" },
+    "errorColor": { "value": "{color.error.700.value}" },
+    "successColor": { "value": "{color.success.700.value}" }
+  }
+}

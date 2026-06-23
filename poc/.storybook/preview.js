@@ -10,7 +10,14 @@ export default {
     // Painel de acessibilidade (axe) visível por padrão.
     a11y: { element: '#storybook-root' },
     options: {
-      storySort: { order: ['Componentes', ['Button']] },
+      storySort: {
+        order: [
+          'Diretrizes de design',
+          ['Títulos', 'Listas', 'Parágrafos', 'Citações', 'Formulários'],
+          'Componentes',
+          ['Button'],
+        ],
+      },
     },
   },
 };

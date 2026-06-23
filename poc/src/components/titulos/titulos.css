@@ -1,0 +1,19 @@
+/* ============================================================================
+   DS-MS — Títulos (Diretrizes de design). Sem origem em components.css da raiz
+   — implementado a partir da documentação pública de designsystem.ms.gov.br/titulos/.
+   Hierarquia semântica H1–H6: cada nível usa tamanho/peso da escala typography.json.
+   ============================================================================ */
+@import "../../../dist/css/tokens.css";
+
+.ds-titulo {
+  font-family: "Open Sans", system-ui, sans-serif;
+  color: var(--titulos-color);
+  margin: 0 0 var(--titulos-margin-bottom);
+}
+
+.ds-titulo.h1 { font-size: var(--titulos-h1-font-size); font-weight: var(--titulos-h1-font-weight); line-height: var(--titulos-h1-line-height); }
+.ds-titulo.h2 { font-size: var(--titulos-h2-font-size); font-weight: var(--titulos-h2-font-weight); line-height: var(--titulos-h2-line-height); }
+.ds-titulo.h3 { font-size: var(--titulos-h3-font-size); font-weight: var(--titulos-h3-font-weight); line-height: var(--titulos-h3-line-height); }
+.ds-titulo.h4 { font-size: var(--titulos-h4-font-size); font-weight: var(--titulos-h4-font-weight); line-height: var(--titulos-h4-line-height); }
+.ds-titulo.h5 { font-size: var(--titulos-h5-font-size); font-weight: var(--titulos-h5-font-weight); line-height: var(--titulos-h5-line-height); }
+.ds-titulo.h6 { font-size: var(--titulos-h6-font-size); font-weight: var(--titulos-h6-font-weight); line-height: var(--titulos-h6-line-height); }
