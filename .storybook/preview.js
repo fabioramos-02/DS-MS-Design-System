@@ -18,7 +18,7 @@ export const parameters = {
         },
     },
     a11y: {
-        element: '#storybook-root',
+        context: '#storybook-root',
         config: {
             rules: [
                 { id: 'color-contrast', enabled: true },
