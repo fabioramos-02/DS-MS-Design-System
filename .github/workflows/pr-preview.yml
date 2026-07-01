@@ -30,6 +30,8 @@ jobs:
         run: npm ci
 
       - name: Build Storybook
+        env:
+          STORYBOOK_BASE_PATH: /storybook-ds-ms/pr-${{ github.event.pull_request.number }}/
         run: npm run build-storybook
 
       - name: Deploy preview

@@ -10,6 +10,6 @@ addons.setConfig({
         brandTarget: '_blank',
 
         // Pode ser SVG, PNG ou imagem externa
-        brandImage: '/favicon-ms.svg',
+        brandImage: './favicon-ms.svg',
     }),
 });
